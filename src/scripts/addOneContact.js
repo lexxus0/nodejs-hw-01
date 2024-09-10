@@ -6,7 +6,7 @@ export const addOneContact = async () => {
   const contact = createFakeContact();
   try {
     const res = await fs.readFile(PATH_DB, contact);
-    const contactsArray = res ? JSON.parse(res) : [];
+    const contactsArray = JSON.parse(res);
     contactsArray.push(contact);
 
     await fs.writeFile(PATH_DB, JSON.stringify(contactsArray));
