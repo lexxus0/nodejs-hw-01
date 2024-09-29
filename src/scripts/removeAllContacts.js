@@ -1,10 +1,8 @@
-import { PATH_DB } from '../constants/contacts.js';
-import fs from 'node:fs/promises';
+import { writeContacts } from '../utils/writeContacts.js';
 
 export const removeAllContacts = async () => {
   try {
-    const contactsArray = [];
-    await fs.writeFile(PATH_DB, JSON.stringify(contactsArray));
+    await writeContacts([]);
   } catch (e) {
     if (e.code === 'ENOENT') {
       console.log('File is not found');

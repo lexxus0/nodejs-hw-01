@@ -1,6 +1,6 @@
 import { createFakeContact } from '../utils/createFakeContact.js';
-import { PATH_DB } from '../constants/contacts.js';
-import fs from 'node:fs/promises';
+import { readContacts } from '../utils/readContacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
 
 const generateContacts = async (number) => {
   const contacts = [];
@@ -9,12 +9,12 @@ const generateContacts = async (number) => {
   }
 
   try {
-    const res = await fs.readFile(PATH_DB);
+    const res = await readContacts();
     const contactsArray = JSON.parse(res);
 
     contactsArray.push(...contacts);
 
-    await fs.writeFile(PATH_DB, JSON.stringify(contactsArray));
+    await writeContacts(contactsArray);
   } catch (e) {
     if (e.code === 'ENOENT') {
       console.log('File is not found');

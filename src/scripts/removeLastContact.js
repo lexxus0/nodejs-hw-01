@@ -1,14 +1,14 @@
-import { PATH_DB } from '../constants/contacts.js';
-import fs from 'node:fs/promises';
+import { readContacts } from '../utils/readContacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
 
 export const removeLastContact = async () => {
   try {
-    const res = await fs.readFile(PATH_DB);
+    const res = await readContacts();
 
     const resData = JSON.parse(res);
     if (resData.length > 0) {
       resData.pop();
-      await fs.writeFile(PATH_DB, JSON.stringify(resData));
+      await writeContacts(resData);
     }
   } catch (e) {
     if (e.code === 'ENOENT') {
